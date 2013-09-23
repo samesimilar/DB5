@@ -17,5 +17,6 @@
 @property (nonatomic, strong, readonly) NSArray *themes;
 
 - (VSTheme *)themeNamed:(NSString *)themeName;
+- (id) initWithURL:(NSURL *) url;
 
 @end

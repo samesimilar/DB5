@@ -21,13 +21,16 @@
 
 
 - (id)init {
-	
-	self = [super init];
-	if (self == nil)
-		return nil;
-	
-	NSString *themesFilePath = [[NSBundle mainBundle] pathForResource:@"DB5" ofType:@"plist"];
-	NSDictionary *themesDictionary = [NSDictionary dictionaryWithContentsOfFile:themesFilePath];
+    NSURL * themesURL =[[NSBundle mainBundle] URLForResource:@"DB5" withExtension:@"plist"];
+    return [self initWithURL:themesURL];
+}
+
+- (id) initWithURL:(NSURL *) url {
+    self = [super init];
+    if (self == nil)
+        return nil;
+    
+	NSDictionary *themesDictionary = [NSDictionary dictionaryWithContentsOfURL:url];
 	
 	NSMutableArray *themes = [NSMutableArray array];
 	for (NSString *oneKey in themesDictionary) {
@@ -38,15 +41,15 @@
 		theme.name = oneKey;
 		[themes addObject:theme];
 	}
-
+    
     for (VSTheme *oneTheme in themes) { /*All themes inherit from the default theme.*/
 		if (oneTheme != _defaultTheme)
 			oneTheme.parentTheme = _defaultTheme;
     }
     
 	_themes = themes;
-	
-	return self;
+    
+    return self;
 }
 
 
